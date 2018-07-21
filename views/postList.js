@@ -23,6 +23,7 @@ module.exports = posts => html`<!DOCTYPE html>
           <small class="news-info">
             ${post.upvotes} upvotes | ${timeAgo(post.date)}
           </small>
+          <button id='step_btn' class='button'>Delete</button>
         </div>`
       )}
     </div>

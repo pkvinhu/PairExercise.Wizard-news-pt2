@@ -33,7 +33,12 @@ app.get("/", async (req, res, next) => {
 
 app.get("/posts/:id", async (req, res, next) => {
   try {
-	const data = await client.query(`SELECT * FROM posts WHERE id = ${req.params.id}`);
+	const data = await client.query(`SELECT posts.*, count.upvotes 
+		FROM posts 
+		INNER JOIN (SELECT postId, COUNT(*) as upvotes FROM upvotes GROUP BY postId) 
+		AS count
+		ON posts.id = count.postId 
+		WHERE id = ${req.params.id}`);
 	
 	const posts = data.rows;
 	console.log(posts);
